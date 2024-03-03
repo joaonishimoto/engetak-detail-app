@@ -11,11 +11,21 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-import MenuOpen from '@mui/icons-material/MenuOpen';
+import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
+import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';
 import ViewInAr from '@mui/icons-material/ViewInAr';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 import { partDB } from "@/db/localdb";
+
 import Link from 'next/link';
+
+import '@/app/globals.css'
+
+
+
+
+
 
 export default function DrawerLeft() {
   const [open, setOpen] = React.useState(false);
@@ -25,28 +35,50 @@ export default function DrawerLeft() {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <List>
-        {partDB.map((text, index) => (
-          <ListItem key={text.name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ViewInAr />
-              </ListItemIcon>
-              <Link key={text.id} href={`${text.name}-0`}>
-                <ListItemText primary={text.name} />
-              </Link>
-            </ListItemButton>
-          </ListItem>
+    <Box 
+      sx={{ width: 300 }} 
+      role="presentation" 
+      onClick={toggleDrawer(false)}
+    >
+      <List className='' >
+        {partDB.map((part, index) => (
+          <Link
+            key={part.id}
+            href={`/home/checklist/${part.name}`} 
+          >
+            <ListItem 
+              key={part.name} 
+              disablePadding 
+              className='text-teal-700'
+            >
+              <ListItemButton>
+                <ListItemIcon className='text-teal-800 -mr-4'>
+                  <RadioButtonUncheckedOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={part.name} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />
     </Box>
   );
 
+
+
+
+
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}><MenuOpen /></Button>
+    <div className='size-16 flex items-center justify-center'>
+      <Button 
+        onClick={toggleDrawer(true)} 
+        className='group hover:bg-teal-100' 
+      >
+        <ArrowCircleLeftIcon 
+          className='group-hover:text-teal-900 text-teal-700 size-12'
+        />
+      </Button>
 
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
